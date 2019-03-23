@@ -27,6 +27,7 @@ Http协议
     * [7.Session](##7.Session)
     * [8.浏览器禁用Cookie](##8.浏览器禁用Cookie)
     * [9.Cookie与Session选择](##9.Cookie与Session选择)
+* [六、https](#六、https) 
 <!-- GFM-TOC -->
 
 # 一、请求及响应格式
@@ -35,7 +36,7 @@ Http协议
 ```
 起始行 (method uri protocol) 
 头信息 (headers)
-主体(entity body)  	
+主体(entity body)     
 ```
 
 -  一个post request：
@@ -59,7 +60,7 @@ HTTP/1.1 200 OK
 Content-type: text/plain
 Content-length: 12
 
-Hello World!	
+Hello World!    
 ```
 # 二、状态码
 
@@ -219,11 +220,11 @@ Hello World!
 - 不安全的方法除了 POST 之外还有 PUT、DELETE。
 
 ### 2.4 幂等性
-	
-- 幂等的 HTTP 方法，同样的请求被执行一次与连续执行多次的效果是一样的，服务器的状态也是一样的。换句话说就是，幂等方法不应该具有副作用（统计用途除外）。	
+    
+- 幂等的 HTTP 方法，同样的请求被执行一次与连续执行多次的效果是一样的，服务器的状态也是一样的。换句话说就是，幂等方法不应该具有副作用（统计用途除外）。 
 - 所有的安全方法也都是幂等的。
-- 在正确实现的条件下，GET，HEAD，PUT 和 DELETE 等方法都是幂等的，而 POST 方法不是。	
-	
+- 在正确实现的条件下，GET，HEAD，PUT 和 DELETE 等方法都是幂等的，而 POST 方法不是。 
+    
 ### 2.5 可缓存
 
 如果要对响应进行缓存，需要满足以下条件：
@@ -234,13 +235,13 @@ Hello World!
 ### 2.6 XMLHttpRequest
 
 为了阐述 POST 和 GET 的另一个区别，需要先了解 XMLHttpRequest：
-	
+    
 - XMLHttpRequest 是一个 API，它为客户端提供了在客户端和服务器之间传输数据的功能。它提供了一个通过 URL 来获取数据的简单方式，并且不会使整个页面刷新。这使得网页只更新一部分页面而不会打扰到用户。XMLHttpRequest 在 AJAX 中被大量使用。
-	
+    
 - 在使用 XMLHttpRequest 的 POST 方法时，浏览器会先发送 Header 再发送 Data。但并不是所有浏览器会这么做，例如火狐就不会。
 - 而 GET 方法 Header 和 Data 会一起发送。
 
-## 五、Cookie
+# 五、Cookie
 
 > HTTP 协议是无状态的，主要是为了让 HTTP 协议尽可能简单，使得它能够处理大量事务。HTTP/1.1 引入 Cookie 来保存状态信息。
 
@@ -248,13 +249,13 @@ Hello World!
 
 > Cookie 曾一度用于客户端数据的存储，因为当时并没有其它合适的存储办法而作为唯一的存储手段，但现在随着现代浏览器开始支持各种各样的存储方式，Cookie 渐渐被淘汰。新的浏览器 API 已经允许开发者直接将数据存储到本地，如使用 Web storage API （本地存储和会话存储）或 IndexedDB。
 
-### 1.用途
+## 1.用途
 
 - 会话状态管理（如用户登录状态、购物车、游戏分数或其它需要记录的信息）
 - 个性化设置（如用户自定义设置、主题等）
 - 浏览器行为跟踪（如跟踪分析用户行为等）
 
-### 2.创建过程
+## 2.创建过程
 
 服务器发送的响应报文包含 Set-Cookie 首部字段，客户端得到响应报文后把 Cookie 内容保存到浏览器中。
 ```html
@@ -274,36 +275,36 @@ Host: www.example.org
 Cookie: yummy_cookie=choco; tasty_cookie=strawberry
 ```
 
-### 3. 分类
+## 3. 分类
 
 - 会话期 Cookie：浏览器关闭之后它会被自动删除，也就是说它仅在会话期内有效。
 - 持久性 Cookie：指定一个特定的过期时间（Expires）或有效期（max-age）之后就成为了持久性的 Cookie。
 
-	```html
-	Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2015 07:28:00 GMT;
-	```
+    ```html
+    Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2015 07:28:00 GMT;
+    ```
 
-### 4. JavaScript获取Cookie
+## 4. JavaScript获取Cookie
 
 - 通过 `Document.cookie` 属性可创建新的 Cookie，也可通过该属性访问非 HttpOnly 标记的 Cookie。
 
-	```html
-	document.cookie = "yummy_cookie=choco";
-	document.cookie = "tasty_cookie=strawberry";
-	console.log(document.cookie);
-	```
+    ```html
+    document.cookie = "yummy_cookie=choco";
+    document.cookie = "tasty_cookie=strawberry";
+    console.log(document.cookie);
+    ```
 
-### 5. Secure和HttpOnly
+## 5. Secure和HttpOnly
 
 - 标记为 Secure 的 Cookie 只能通过被 HTTPS 协议加密过的请求发送给服务端。但即便设置了 Secure 标记，敏感信息也不应该通过 Cookie 传输，因为 Cookie 有其固有的不安全性，Secure 标记也无法提供确实的安全保障。
 
 - 标记为 HttpOnly 的 Cookie 不能被 JavaScript 脚本调用。跨站脚本攻击 (XSS) 常常使用 JavaScript 的 `Document.cookie` API 窃取用户的 Cookie 信息，因此使用 HttpOnly 标记可以在一定程度上避免 XSS 攻击。
 
-	```html
-	Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2015 07:28:00 GMT; Secure; HttpOnly
-	```
+    ```html
+    Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2015 07:28:00 GMT; Secure; HttpOnly
+    ```
 
-### 6.作用域
+## 6.作用域
 
 - Domain 标识指定了哪些主机可以接受 Cookie。如果不指定，默认为当前文档的主机（不包含子域名）。如果指定了 Domain，则一般包含子域名。例如，如果设置 Domain=mozilla.org，则 Cookie 也包含在子域名中（如 developer.mozilla.org）。
 
@@ -313,7 +314,7 @@ Cookie: yummy_cookie=choco; tasty_cookie=strawberry
 - /docs/Web/
 - /docs/Web/HTTP
 
-### 7.Session
+## 7.Session
 
 除了可以将用户信息通过 Cookie 存储在用户浏览器中，也可以利用 Session 存储在服务器端，存储在服务器端的信息更加安全。
 
@@ -329,12 +330,80 @@ Session 可以存储在服务器上的文件、数据库或者内存中。也可
 
 应该注意 Session ID 的安全性问题，不能让它被恶意攻击者轻易获取，那么就不能产生一个容易被猜到的 Session ID 值。此外，还需要经常重新生成 Session ID。在对安全性要求极高的场景下，例如转账等操作，除了使用 Session 管理用户状态之外，还需要对用户进行重新验证，比如重新输入密码，或者使用短信验证码等方式。
 
-### 8.浏览器禁用Cookie
+## 8.浏览器禁用Cookie
 
 - 此时无法使用 Cookie 来保存用户信息，只能使用 Session。除此之外，不能再将 Session ID 存放到 Cookie 中，而是使用 URL 重写技术，将 Session ID 作为 URL 的参数进行传递。
 
-### 9.Cookie与Session选择
+## 9.Cookie与Session选择
 
 - Cookie 只能存储 ASCII 码字符串，而 Session 则可以存取任何类型的数据，因此在考虑数据复杂性时首选 Session；
 - Cookie 存储在浏览器中，容易被恶意查看。如果非要将一些隐私数据存在 Cookie 中，可以将 Cookie 值进行加密，然后在服务器进行解密；
 - 对于大型网站，如果用户所有的信息都存储在 Session 中，那么开销是非常大的，因此不建议将所有的用户信息都存储到 Session 中。
+HTTP 有以下安全性问题：
+
+- 使用明文进行通信，内容可能会被窃听；
+- 不验证通信方的身份，通信方的身份有可能遭遇伪装；
+- 无法证明报文的完整性，报文有可能遭篡改。
+
+HTTPs 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）通信，再由 SSL 和 TCP 通信，也就是说 HTTPs 使用了隧道进行通信。
+
+通过使用 SSL，HTTPs 具有了加密（防窃听）、认证（防伪装）和完整性保护（防篡改）。
+
+<div align="center"> <img src="../../pics//ssl-offloading.jpg" width="700"/> </div><br>
+
+## 加密
+
+### 1. 对称密钥加密
+
+对称密钥加密（Symmetric-Key Encryption），加密和解密使用同一密钥。
+
+- 优点：运算速度快；
+- 缺点：无法安全地将密钥传输给通信方。
+
+<div align="center"> <img src="../../pics//7fffa4b8-b36d-471f-ad0c-a88ee763bb76.png" width="600"/> </div><br>
+
+### 2.非对称密钥加密
+
+非对称密钥加密，又称公开密钥加密（Public-Key Encryption），加密和解密使用不同的密钥。
+
+公开密钥所有人都可以获得，通信发送方获得接收方的公开密钥之后，就可以使用公开密钥进行加密，接收方收到通信内容后使用私有密钥解密。
+
+非对称密钥除了用来加密，还可以用来进行签名。因为私有密钥无法被其他人获取，因此通信发送方使用其私有密钥进行签名，通信接收方使用发送方的公开密钥对签名进行解密，就能判断这个签名是否正确。
+
+- 优点：可以更安全地将公开密钥传输给通信发送方；
+- 缺点：运算速度慢。
+
+<div align="center"> <img src="....//pics//39ccb299-ee99-4dd1-b8b4-2f9ec9495cb4.png" width="600"/> </div><br>
+
+### 3. HTTPs 采用的加密方式
+
+HTTPs 采用混合的加密机制，使用非对称密钥加密用于传输对称密钥来保证安全性，之后使用对称密钥加密进行通信来保证效率。（下图中的 Session Key 就是对称密钥）
+
+<div align="center"> <img src="../../pics//How-HTTPS-Works.png" width="600"/> </div><br>
+
+## 认证
+
+通过使用  **证书**  来对通信方进行认证。
+
+数字证书认证机构（CA，Certificate Authority）是客户端与服务器双方都可信赖的第三方机构。
+
+服务器的运营人员向 CA 提出公开密钥的申请，CA 在判明提出申请者的身份之后，会对已申请的公开密钥做数字签名，然后分配这个已签名的公开密钥，并将该公开密钥放入公开密钥证书后绑定在一起。
+
+进行 HTTPs 通信时，服务器会把证书发送给客户端。客户端取得其中的公开密钥之后，先使用数字签名进行验证，如果验证通过，就可以开始通信了。
+
+通信开始时，客户端需要使用服务器的公开密钥将自己的私有密钥传输给服务器，之后再进行对称密钥加密。
+
+<div align="center"> <img src="../../pics//2017-06-11-ca.png" width=""/> </div><br>
+
+## 完整性保护
+
+SSL 提供报文摘要功能来进行完整性保护。
+
+HTTP 也提供了 MD5 报文摘要功能，但不是安全的。例如报文内容被篡改之后，同时重新计算 MD5 的值，通信接收方是无法意识到发生了篡改。
+
+HTTPs 的报文摘要功能之所以安全，是因为它结合了加密和认证这两个操作。试想一下，加密之后的报文，遭到篡改之后，也很难重新计算报文摘要，因为无法轻易获取明文。
+
+## HTTPs 的缺点
+
+- 因为需要进行加密解密等过程，因此速度会更慢；
+- 需要支付证书授权的高费用。
