@@ -373,7 +373,7 @@ HTTPs 并不是新协议，而是让 HTTP 先和 SSL（Secure Sockets Layer）�
 - 优点：可以更安全地将公开密钥传输给通信发送方；
 - 缺点：运算速度慢。
 
-<div align="center"> <img src="....//pics//39ccb299-ee99-4dd1-b8b4-2f9ec9495cb4.png" width="600"/> </div><br>
+<div align="center"> <img src="../../pics//39ccb299-ee99-4dd1-b8b4-2f9ec9495cb4.png" width="600"/> </div><br>
 
 ### 3. HTTPs 采用的加密方式
 
