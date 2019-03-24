@@ -107,7 +107,7 @@ Hello World!
 -  **401 Unauthorized** ：该状态码表示发送的请求需要有认证信息（BASIC 认证、DIGEST 认证）。如果之前已进行过一次请求，则表示用户认证失败。
 -  **403 Forbidden** ：请求被拒绝，服务器端没有必要给出拒绝的详细理由。
 -  **404 Not Found**  
--  **404 Mthod Not Support** :方法不支持
+-  **405 Mthod Not Support** :方法不支持
 
 ### 5XX 服务器错误
 
