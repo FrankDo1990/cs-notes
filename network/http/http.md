@@ -28,6 +28,10 @@ Http协议
     * [8.浏览器禁用Cookie](##8.浏览器禁用Cookie)
     * [9.Cookie与Session选择](##9.Cookie与Session选择)
 * [六、https](#六、https) 
+    * [1.加密](#1.加密)
+    * [2.认证](#2.认证)
+    * [3.完整性保护](#2.完整性保护)
+    * [4.HTTPs的缺点](#4.HTTPs的缺点)
 <!-- GFM-TOC -->
 
 # 一、请求及响应格式
