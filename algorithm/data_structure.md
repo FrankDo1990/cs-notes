@@ -58,6 +58,7 @@
 > 二分搜索的时间复杂度为O(lgN)
 4. 最大子数组和
 > 一个整形数组中包含负整数，求最大连续子数组和,经典的动态规划
+also see: http://wiki.jikexueyuan.com/project/for-offer/question-thirty-one.html
 ```
 //全部是负数就返回0了
 //定义以当前元素为结尾的最大字数组和为curMax[i], 则有curMax[i] = max{curMax[i - 1], 0} + arr[i]
