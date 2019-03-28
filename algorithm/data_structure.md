@@ -45,7 +45,7 @@
 2.  获取某个数组中出现最多的元素
 > eg:  [1, 2, 3, 3, 5, 3] 中出现最多的元素， 结果为 3 
 > 定义map, key为元素内容，value为出现频次
-* 求整型数组中和为target的数对。
+3. 求整型数组中和为target的数对。
 > eg: 给定数组 [4、2、1、7、11、15], target 为15， 求结果为15的结果对（必须为两个数之和）， 结果为  4和11。
 > Solution 1 :  建立一个map, key为元素值，val = target - arr[i]。 建立map后遍历原数组，如果map[val] =  arr[i], 则val 和 arr[i] 为一对可选值， 时间复杂度O(n), 空间复杂度O(n)。
 > Solution 2 ：先对数组排序，之后分别从前后两端遍历数组，如果 arr[i] + arr[j] = target, 则为一个可选结果。时间负责度为O(NlgN)，即排序时间复杂度，空间复杂度为O(1)。
@@ -56,7 +56,27 @@
 > 
 > 延伸： **求一个正数的开根号**，也采用二分搜索，注意区分输入值大于1 或者小于 1 的情况（两种情况正好相反，*小于1的时候越乘越小，大于1的时候越乘越大*）。
 > 二分搜索的时间复杂度为O(lgN)
-
+4. 最大子数组和
+> 一个整形数组中包含负整数，求最大连续子数组和,经典的动态规划
+```
+//全部是负数就返回0了
+//定义以当前元素为结尾的最大字数组和为curMax[i], 则有curMax[i] = max{curMax[i - 1], 0} + arr[i]
+//因为只需要保留上一元素的历史状态，这里只需要定义一个变量就好了，不需要定义数组
+public int maxSubArr(int[] arr) {
+    if (arr == null || arr.length == 0) {
+        return 0;
+    }
+    int curMax = Math.max(0, arr[0]);
+    int max = curMax;
+    for (int i = 1; i < arr.length; i++) {
+        curMax = Math.max(0, curMax) + arr[i];
+        if (curMax > max) {
+            max = curMax;
+        }
+    }
+    return max;
+}
+```
 # 三、链表
 ## 1.概念及性质
 
@@ -91,6 +111,28 @@
 > 有些难，有空补代码
 3. 用两个栈实现一个队列
 > 难。。。Talk is cheap, show me the code
+```
+//两个栈，一个用做push,另一个用作pop，
+//当pop栈没有数据时，将push栈的数据全部读出后push到pop栈，之后读pop栈
+//关键在于，一个只做pop, 另一个只做push
+public class QueueWithStack<Integer>{
+    Stack<Integer> pushStack = new Stack();
+    Stack<Integer> popStack = new Stack();
+
+     Integer push(Integer i) {
+         return pushStack.push(i);
+    }
+
+     Integer pop() {
+        if (popStack.isEmpty()) {
+            while (!pushStack.isEmpty()) {
+                popStack.push(pushStack.pop());
+            }
+        }
+        return popStack.pop();
+    }
+}
+```
 
 # 五、队列
 ## 1.概念及性质
@@ -119,6 +161,19 @@
 >  所有有关二叉树的题目都是遍历
 2. 求二叉树的高度
 > 递归求左子树高度和右子树高度，height = Max(left, right) + 1 
+```
+//树结构
+static class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+}
+//求树高度, 左右子树比较高
+int getTreeHeight(TreeNode treeNode) {
+    if (treeNode == null) return 0;
+    return Math.max(getTreeHeight(treeNode.left), getTreeHeight(treeNode.right)) + 1;
+}
+```
 3. 求两个节点的最近公共祖先节点
 >  从根节点分别求到两个节点的路径序列，然后求两个路径的前缀即可
 
